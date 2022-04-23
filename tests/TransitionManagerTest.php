@@ -7,7 +7,7 @@ use Bvtterfly\ModelStateMachine\TransitionManager;
 
 it('should call actions', function () {
     $model = new StateTransitionModel();
-    $testActionMock = mock(TestAction::class);
+    $testActionMock = Mockery::mock(TestAction::class);
     $testActionMock->shouldReceive('handle')->once();
     app()->instance(TestAction::class, $testActionMock);
     $manager = new TransitionManager($model, collect([TestAction::class]), []);
@@ -16,8 +16,8 @@ it('should call actions', function () {
 
 it('should call actions and validations', function () {
     $model = new StateTransitionModel();
-    $testActionMock = mock(TestAction::class);
-    $testActionWithValidationMock = mock(TestActionWithValidation::class);
+    $testActionMock = Mockery::mock(TestAction::class);
+    $testActionWithValidationMock = Mockery::mock(TestActionWithValidation::class);
     $testActionMock->shouldReceive('handle')->once();
     $testActionWithValidationMock->shouldReceive('handle')->once();
     $testActionWithValidationMock->shouldReceive('validate')->once();
