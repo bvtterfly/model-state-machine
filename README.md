@@ -236,6 +236,7 @@ class DraftToPending implements StateTransition
 }
 
 ```
+You can pass this class as a third argument to the `#[AllowTransitionTo]`.
 
 Then, Our `PostState` would look like this:
 
@@ -265,9 +266,6 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
