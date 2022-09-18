@@ -29,11 +29,11 @@ The simplest backed enum that holds the states of a blog post status is:
 
 ```php
 use Bvtterfly\ModelStateMachine\Attributes\AllowTransitionTo;
-use Bvtterfly\ModelStateMachine\Attributes\DefaultState;
+use Bvtterfly\ModelStateMachine\Attributes\InitialState;
 
 enum PostState: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::PENDING)]
     case DRAFT = 'draft';
 
@@ -86,13 +86,13 @@ $stateMachine->getAllStates();
 
 ### Get All allowed transitions
 
-You can use the `getStateTransitions` method, which return collection of available transitions for current/default state
+You can use the `getStateTransitions` method, which return collection of available transitions for current/initial state
 
 ```php
 $stateMachine->getStateTransitions();
 ```
 
-> If the state field is null and the state configuration doesn't have a default state (field in unknown state), It will throw an exception.
+> If the state field is null and the state configuration doesn't have a initial state (field in unknown state), It will throw an exception.
 
 If you want to get available transitions for a state, You can pass it to the method:
 
@@ -120,7 +120,7 @@ We can do this using the `#[Actions]` attribute. Here's how our `PostState` woul
 ```php
 enum PostState: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::PENDING)]
     case DRAFT = 'draft';
 
@@ -159,7 +159,7 @@ In the above example, If we want to send a notification to the admin when the po
 ```php
 enum PostState: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::PENDING, [SendNotificationToAdmin::class])]
     case DRAFT = 'draft';
 
@@ -243,7 +243,7 @@ Then, Our `PostState` would look like this:
 ```php
 enum PostState: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::PENDING, [SendNotificationToAdmin::class], DraftToPending::class)]
     case DRAFT = 'draft';
 

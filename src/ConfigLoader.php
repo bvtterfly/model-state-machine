@@ -4,7 +4,7 @@ namespace Bvtterfly\ModelStateMachine;
 
 use Bvtterfly\ModelStateMachine\Attributes\Actions;
 use Bvtterfly\ModelStateMachine\Attributes\AllowTransitionTo;
-use Bvtterfly\ModelStateMachine\Attributes\DefaultState;
+use Bvtterfly\ModelStateMachine\Attributes\InitialState;
 use Bvtterfly\ModelStateMachine\DataTransferObjects\StateConfig;
 use Bvtterfly\ModelStateMachine\DataTransferObjects\StateMachineConfig;
 use Bvtterfly\ModelStateMachine\DataTransferObjects\StateTransitionConfig;
@@ -30,7 +30,7 @@ class ConfigLoader
 
     private static function resolve($enumClass): StateMachineConfig
     {
-        $default = null;
+        $initial = null;
         $states = collect();
         $reflectionEnum = new ReflectionEnum($enumClass);
 
@@ -39,9 +39,9 @@ class ConfigLoader
         }
 
         foreach ($reflectionEnum->getCases() as $case) {
-            $defaultStateAttributes = $case->getAttributes(DefaultState::class);
-            if (count($defaultStateAttributes) && ! $default) {
-                $default = $case->getValue()->value;
+            $initialStateAttributes = $case->getAttributes(InitialState::class);
+            if (count($initialStateAttributes) && ! $initial) {
+                $initial = $case->getValue()->value;
             }
             $transitionsAttribute = $case->getAttributes(AllowTransitionTo::class);
             $transitions = collect();
@@ -64,6 +64,6 @@ class ConfigLoader
             $states->put($case->getValue()->value, $caseConfig);
         }
 
-        return new StateMachineConfig(default: $default, states: $states);
+        return new StateMachineConfig(initial: $initial, states: $states);
     }
 }

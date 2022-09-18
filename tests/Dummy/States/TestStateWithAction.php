@@ -4,13 +4,13 @@ namespace Bvtterfly\ModelStateMachine\Tests\Dummy\States;
 
 use Bvtterfly\ModelStateMachine\Attributes\Actions;
 use Bvtterfly\ModelStateMachine\Attributes\AllowTransitionTo;
-use Bvtterfly\ModelStateMachine\Attributes\DefaultState;
+use Bvtterfly\ModelStateMachine\Attributes\InitialState;
 use Bvtterfly\ModelStateMachine\Tests\Dummy\Actions\TestAction;
 use Bvtterfly\ModelStateMachine\Tests\Dummy\Actions\TestActionWithValidation;
 
 enum TestStateWithAction: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::B)]
     #[Actions(TestAction::class)]
     case A = 'a';

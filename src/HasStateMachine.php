@@ -15,7 +15,7 @@ trait HasStateMachine
             /**
              * @var HasStateMachine $model
              */
-            $model->setStateDefaults();
+            $model->setInitialStates();
         });
     }
 
@@ -24,7 +24,7 @@ trait HasStateMachine
         return [];
     }
 
-    private function setStateDefaults(): void
+    private function setInitialStates(): void
     {
         foreach ($this->getStateMachineFields() as $field) {
             if ($this->{$field} !== null) {
@@ -33,12 +33,12 @@ trait HasStateMachine
 
             $stateMachineConfig = $this->getStateMachineConfig($field);
 
-            $defaultValue = $stateMachineConfig->default;
-            if ($defaultValue === null) {
+            $initialValue = $stateMachineConfig->initial;
+            if ($initialValue === null) {
                 continue;
             }
 
-            $this->{$field} = $defaultValue;
+            $this->{$field} = $initialValue;
         }
     }
 

@@ -4,7 +4,6 @@ namespace Bvtterfly\ModelStateMachine;
 
 use BackedEnum;
 use Bvtterfly\ModelStateMachine\DataTransferObjects\StateMachineConfig;
-use Bvtterfly\ModelStateMachine\DataTransferObjects\StateTransitionConfig;
 use Bvtterfly\ModelStateMachine\Exceptions\InvalidTransition;
 use Bvtterfly\ModelStateMachine\Exceptions\UnknownState;
 use Exception;
@@ -86,7 +85,7 @@ class StateMachine
     {
         $state = $this->model->{$this->field};
         if (! $state) {
-            $state = $this->config->default;
+            $state = $this->config->initial;
             if (! $state) {
                 throw UnknownState::make();
             }
@@ -106,13 +105,10 @@ class StateMachine
         }
         $currentState = $this->currentState();
         $this->validateTransitionExistence($currentState, $newStateVal);
-        /** @var Collection $sourceStateTransitions */
-        $sourceStateTransitions = $this->config->states->get($currentState)->transitions;
-        /** @var StateTransitionConfig $stateTransitionConfig */
-        $stateTransitionConfig = $sourceStateTransitions->firstWhere('to', $newStateVal);
-        $sourceStateActions = $stateTransitionConfig->actions;
-        $destinationStateActions = $this->config->states->get($newStateVal)->actions;
-        $actions = collect($sourceStateActions)->concat($destinationStateActions);
+        $stateTransitionConfig = $this->config->getStateTransitionConfig($currentState, $newStateVal);
+        $transitionActions = $this->config->getTransitionActions($currentState, $newStateVal);
+        $destinationStateActions = $this->config->getStateActions($newStateVal);
+        $actions = $transitionActions->concat($destinationStateActions);
         $stateMachineTransition = new TransitionManager($this->model, $actions, $additionalData);
         $stateMachineTransition->transit();
         $stateTransitionConfig->getStateTransition()->commitTransition($newState, $this->model, $this->field, $additionalData);

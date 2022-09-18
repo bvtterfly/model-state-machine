@@ -5,6 +5,7 @@ namespace Bvtterfly\ModelStateMachine\DataTransferObjects;
 use Bvtterfly\ModelStateMachine\Contracts\StateTransition;
 use Bvtterfly\ModelStateMachine\DefaultStateTransition;
 use Bvtterfly\ModelStateMachine\Validator;
+use Illuminate\Support\Collection;
 
 class StateTransitionConfig
 {
@@ -22,5 +23,10 @@ class StateTransitionConfig
     public function getStateTransition(): StateTransition
     {
         return app()->make($this->transition);
+    }
+
+    public function getActions(): Collection
+    {
+        return collect($this->actions);
     }
 }

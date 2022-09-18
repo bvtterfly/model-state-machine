@@ -12,7 +12,7 @@ use Bvtterfly\ModelStateMachine\Tests\Dummy\States\TestState;
 it('can get state config', function () {
     $model = new ModelA();
     $config = $model->getStateMachineConfig('state');
-    expect($config)->default->toEqual('a');
+    expect($config)->initial->toEqual('a');
     $states = collect([
         'a' => new StateConfig(
             transitions: collect([

@@ -22,7 +22,7 @@ use Bvtterfly\ModelStateMachine\Tests\Dummy\StateTransitions\InvalidStateTransit
 
 it('can load configs from a simple enum', function () {
     $config = ConfigLoader::load(TestState::class);
-    expect($config)->default->toEqual('a');
+    expect($config)->initial->toEqual('a');
     $states = collect([
         'a' => new StateConfig(
             transitions: collect([
@@ -42,7 +42,7 @@ it('can load configs from a simple enum', function () {
 
 it('can load configs from enum with transition action', function () {
     $config = ConfigLoader::load(TestStateWithTransitionAction::class);
-    expect($config)->default->toEqual('a');
+    expect($config)->initial->toEqual('a');
     $states = collect([
         'a' => new StateConfig(
             transitions: collect([
@@ -60,7 +60,7 @@ it('can load configs from enum with transition action', function () {
 
 it('can load configs from enum with state transition', function () {
     $config = ConfigLoader::load(TestStateWithStateTransition::class);
-    expect($config)->default->toEqual('a');
+    expect($config)->initial->toEqual('a');
     $states = collect([
         'a' => new StateConfig(
             transitions: collect([
@@ -82,7 +82,7 @@ it('cant load configs from enum with invalid state transition', function () {
 
 it('can load configs from enum with action', function () {
     $config = ConfigLoader::load(TestStateWithAction::class);
-    expect($config)->default->toEqual('a');
+    expect($config)->initial->toEqual('a');
     $states = collect([
         'a' => new StateConfig(
             transitions: collect([
@@ -102,7 +102,7 @@ it('can load configs from enum with action', function () {
 
 it('can load configs from enum with multiple action', function () {
     $config = ConfigLoader::load(TestStateWithMultipleActions::class);
-    expect($config)->default->toBeNull();
+    expect($config)->initial->toBeNull();
     $states = collect([
         'a' => new StateConfig(
             transitions: collect(),

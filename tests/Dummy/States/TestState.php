@@ -3,11 +3,11 @@
 namespace Bvtterfly\ModelStateMachine\Tests\Dummy\States;
 
 use Bvtterfly\ModelStateMachine\Attributes\AllowTransitionTo;
-use Bvtterfly\ModelStateMachine\Attributes\DefaultState;
+use Bvtterfly\ModelStateMachine\Attributes\InitialState;
 
 enum TestState: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::B)]
     case A = 'a';
 

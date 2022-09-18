@@ -3,12 +3,12 @@
 namespace Bvtterfly\ModelStateMachine\Tests\Dummy\States;
 
 use Bvtterfly\ModelStateMachine\Attributes\AllowTransitionTo;
-use Bvtterfly\ModelStateMachine\Attributes\DefaultState;
+use Bvtterfly\ModelStateMachine\Attributes\InitialState;
 use Bvtterfly\ModelStateMachine\Tests\Dummy\StateTransitions\InvalidStateTransition;
 
 enum TestStateWithInvalidStateTransition: string
 {
-    #[DefaultState]
+    #[InitialState]
     #[AllowTransitionTo(self::B, transition: InvalidStateTransition::class)]
     case A = 'a';
 
